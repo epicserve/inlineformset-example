@@ -142,6 +142,7 @@ DJANGO_APPS = (
 THIRDPARTY_APPS = (
     'compressor',
     'south',
+    'bootstrapform',
 )
 
 PROJECT_APPS = (

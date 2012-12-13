@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load bootstrap %}
+
 {% block title %}Manage Books{% endblock title %}
 
 {% block bottom_script %}{{ block.super }}
@@ -29,14 +31,20 @@
 
 {% block base_content %}
 
-<h1>Add an Author and Books</h1>
+<div class="page-header">
+  <h1>Add an Author and Books</h1>
+</div>
 
-<form class="form-horizontal form-inline" method="post">
+<form action="." method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+
+  <legend>Author</legend>
+  {{ form|bootstrap }}
+
   {{ formset.management_form }}
+
   <legend>Books</legend>
-  <div class="books">
+  <div class="books form-inline">
     {% for book_form in formset %}
       <div id="book-{{ forloop.counter0 }}">
         {{ book_form }}
@@ -44,7 +52,7 @@
     {% endfor %}
   </div>
   <div class="form-actions">
-     <a href="#" class="btn btn-info add-book">Add Book</a>
+     <a href="#" class="btn btn-inverse add-book">Add Book</a>
      <button type="submit" class="btn btn-primary">{% if form.instance.pk %}<i class="icon-edit icon-white"></i> Save{% else %}<i class="icon-plus icon-white"></i> Add{% endif %} Author and Books</button>
    </div>
  </form>
