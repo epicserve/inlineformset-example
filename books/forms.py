@@ -12,4 +12,4 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
 
-BookFormSet = inlineformset_factory(Author, Book)
+BookFormSet = inlineformset_factory(Author, Book, extra=1)

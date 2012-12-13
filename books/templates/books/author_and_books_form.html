@@ -4,26 +4,41 @@
 
 {% block title %}{% if form.instance.pk %}Edit{% else %}Add{% endif %} Author and Books{% endblock title %}
 
+{% block link %}{{ block.super }}
+    <style type="text/css">
+    .errorlist {
+        list-style: none;
+        color: #B94A48;
+        margin: 0px 0px 9px 0px;
+        padding: 0px;
+    }
+    .books input[type=checkbox] {
+        margin-top: -3px;
+    }
+    </style>
+{% endblock link %}
+
 {% block bottom_script %}{{ block.super }}
     <script src="{{ STATIC_URL }}js/underscore/underscore.min.js" ></script>
     <script type="text/html" id="book-template">
-    <div id="book-<%= id %>">
-        <label for="id_books-<%= id %>-title">Book Title:</label>
-        <input id="id_books-<%= id %>-title" type="text" name="books-<%= id %>-title" maxlength="100">
-        <input type="hidden" name="books-<%= id %>-author" id="id_books-<%= id %>-author">
-        <input type="hidden" name="books-<%= id %>-id" id="id_books-<%= id %>-id">
+    <div id="book-__prefix__">
+        {{ formset.empty_form.id }}
+        {{ formset.empty_form.title.errors }}
+        {{ formset.empty_form.title.label_tag }}
+        {{ formset.empty_form.title }}
+        {% if formset.can_delete %}{{ formset.empty_form.DELETE }} {{ formset.empty_form.DELETE.label_tag }}{% endif %}
     </div>
     </script>
     <script>
     $(function() {
         $('.add-book').click(function(ev){
             ev.preventDefault();
-            var count = $('.books').children().length;
+            var count = parseInt($('#id_book_set-TOTAL_FORMS').attr('value'), 10);
             var tmplMarkup = $('#book-template').html();
-            var compiledTmpl = _.template(tmplMarkup, { id : count });
+            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
+            console.log(compiledTmpl);
             $('div.books').append(compiledTmpl);
-            // update form count
-            $('#id_books-TOTAL_FORMS').attr('value', count+1);
+            $('#id_book_set-TOTAL_FORMS').attr('value', count + 1);
         });
     });
     </script>{% endblock bottom_script %}
@@ -36,23 +51,28 @@
 </div>
 
 <form action="." method="post">
-  {% csrf_token %}
+    {% csrf_token %}
 
-  <legend>Author</legend>
-  {{ form|bootstrap }}
+    <legend>Author</legend>
+    <div class="author">
+    {{ form|bootstrap }}
+    </div>
 
-  {{ formset.management_form }}
-
-  <legend>Books</legend>
-  <div class="books form-inline">
-    {% for book_form in formset %}
-      <div id="book-{{ forloop.counter0 }}">
-        {{ book_form }}
-      </div>
-    {% endfor %}
+    <legend>Books</legend>
+    <div class="books form-inline">
+        {{ formset.management_form }}
+        {% for form in formset %}
+        <div id="book-{{ forloop.counter0 }}" class="control-group{% if form.errors %} error{% endif %}">
+            {{ form.id }}
+            {{ form.title.errors }}
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {% if formset.can_delete %}{{ form.DELETE }} {{ form.DELETE.label_tag }}{% endif %}
+        </div>
+        {% endfor %}
   </div>
   <div class="form-actions">
-     <a href="#" class="btn btn-inverse add-book">Add Book</a>
+     <a href="#" class="btn btn-inverse add-book"><i class="icon-plus icon-white"></i> Add Book</a>
      <button type="submit" class="btn btn-primary">{% if form.instance.pk %}<i class="icon-edit icon-white"></i> Save{% else %}<i class="icon-plus icon-white"></i> Add{% endif %} Author and Books</button>
    </div>
  </form>
