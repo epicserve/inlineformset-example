@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}{{ object.title }}{% endblock title %}
+
+{% block base_content %}
+
+<ul class="breadcrumb">
+  <li><a href="{% url 'book_list' %}">Books</a> <span class="divider">/</span></li>
+  <li class="active">{{ object.title }}</li>
+</ul>
+
+<div class="page-header">
+    <a class="btn btn-primary pull-right" href="{% url 'edit_author_and_books' object.author.pk %}"><i class="icon-edit icon-white"></i> Edit</a>
+    <h1>{{ object.title }}</h1>
+</div>
+
+<p>By {{ object.author }}</p>
+
+{% endblock base_content %}

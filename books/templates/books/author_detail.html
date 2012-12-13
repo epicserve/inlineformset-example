@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}{{ object.name }}{% endblock title %}
+
+{% block base_content %}
+
+<ul class="breadcrumb">
+  <li><a href="{% url 'author_list' %}">Authors</a> <span class="divider">/</span></li>
+  <li class="active">{{ object.name }}</li>
+</ul>
+
+<div class="page-header">
+    <a class="btn btn-primary pull-right" href="{% url 'edit_author_and_books' object.pk %}"><i class="icon-edit icon-white"></i> Edit Author and Books</a>
+    <h1>{{ object.name }}</h1>
+</div>
+
+<h2>Author's Books</h2>
+
+<ul>
+    {% for book in object.book_set.all %}
+    <li>{{ book.title }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock base_content %}

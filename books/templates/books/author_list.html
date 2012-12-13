@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}Authors{% endblock title %}
+
+{% block base_content %}
+
+<div class="page-header">
+    <h1>Author List</h1>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <th>Author</th>
+    </tr>
+    {% for object in object_list %}
+    <tr>
+        <td><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock base_content %}

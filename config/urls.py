@@ -19,10 +19,5 @@ admin.autodiscover()
 urlpatterns += patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^grappelli/', include('grappelli.urls')),
-    (r'^books/', include('books.urls')),
-)
-
-# Project Urls
-urlpatterns += patterns('django.views.generic.simple',
-    (r'^$', 'direct_to_template', {'template': 'index.html'}),
+    (r'', include('books.urls')),
 )
