@@ -24,8 +24,9 @@ class ManageBooksView(CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
+        form = context['form']
         formset = context['formset']
-        if formset.is_valid():
+        if form.is_valid() and formset.is_valid():
             self.object = form.save()
             formset.instance = self.object
             formset.save()
