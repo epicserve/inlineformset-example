@@ -19,7 +19,7 @@
     {% for object in object_list %}
     <tr>
         <td><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></td>
-        <td>{{ object.author }}</td>
+        <td><a href="{{ object.author.get_absolute_url }}">{{ object.author }}</a></td>
     </tr>
     {% endfor %}
 
