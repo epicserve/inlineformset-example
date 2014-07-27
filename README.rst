@@ -39,6 +39,7 @@ $ export DJANGO_SETTINGS_MODULE=config.settings.development
 Setup your database::
 
 $ django-admin.py syncdb
+$ django-admin.py migrate
 
 At this point your base site should be setup and you can now run your dev server. ::
 
