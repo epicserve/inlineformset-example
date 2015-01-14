@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, include
 from django.contrib import admin
 from django.conf import settings
 
@@ -7,7 +7,7 @@ handler500 = 'utils.views.server_error'
 urlpatterns = patterns('')
 
 # Debug/Development URLs
-if settings.DEBUG == True:
+if settings.DEBUG is True:
     urlpatterns += patterns('',
         (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     )

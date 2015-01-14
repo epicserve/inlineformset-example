@@ -15,6 +15,8 @@ INTERNAL_IPS = ('127.0.0.1', )
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 
+SECRET_KEY = '<change this before going to production>'
+
 ADMINS = (
     ('Your Name', 'username@example.com'),
 )
@@ -22,14 +24,13 @@ ADMINS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',            # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '%s/config/dev.db' % DJANGO_PROJECT_ROOT,  # Or path to database file if using sqlite3.
+        'NAME': '%s/config/dev.db' % BASE_DIR,  # Or path to database file if using sqlite3.
         'USER': '',                                        # Not used with sqlite3.
     }
 }
 
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
 INSTALLED_APPS += (
-    'django.contrib.admin',
     'debug_toolbar',
 )
 DEBUG_TOOLBAR_CONFIG = {

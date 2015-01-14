@@ -1,10 +1,12 @@
-from django.conf.urls import patterns
+from django.conf.urls import patterns, url
+from books import views
 
-urlpatterns = patterns('books.views',
-    (r'^$', 'book_list', {}, 'book_list'),
-    (r'^(?P<pk>\d+)/$', 'book_detail', {}, 'book_detail'),
-    (r'^add/$', 'manage_books', {}, 'add_author_and_books'),
-    (r'^(?P<pk>\d+)/edit/$', 'manage_books', {}, 'edit_author_and_books'),
-    (r'^authors/$', 'author_list', {}, 'author_list'),
-    (r'^authors/(?P<pk>\d+)/$', 'author_detail', {}, 'author_detail'),
+urlpatterns = patterns(
+    '',
+    url(r'^$', views.BookList.as_view(), name='book_list'),
+    url(r'^(?P<pk>\d+)/$', views.BookDetail.as_view(), name='book_detail'),
+    url(r'^add/$', views.AuthorCreateView.as_view(), name='add_author_and_books'),
+    url(r'^(?P<pk>\d+)/edit/$', views.AuthorUpdateView.as_view(), name='edit_author_and_books'),
+    url(r'^authors/$', views.AuthorList.as_view(), name='author_list'),
+    url(r'^authors/(?P<pk>\d+)/$', views.AuthorDetail.as_view(), name='author_detail'),
 )

@@ -6,10 +6,12 @@ from .models import Author, Book
 class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
+        fields = ('name', )
 
 
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
+        fields = ('author', 'title')
 
-BookFormSet = inlineformset_factory(Author, Book, extra=1)
+BookFormSet = inlineformset_factory(Author, Book, extra=0, min_num=1, fields=('title', ))

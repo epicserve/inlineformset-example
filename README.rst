@@ -9,38 +9,15 @@ the ``inlineformset_factory``.
 Setup Instructions
 ------------------
 
-Before you begin make sure you've setup and installed `Virtualenvwrapper <http://www.doughellmann.com/projects/virtualenvwrapper/>`_.
+::
 
-Create a directory for your new Django site. ::
+    $ cd ~/Sites
+    $ curl -LOk https://github.com/epicserve/inlineformset-example/archive/django_1.7.zip && unzip django_1.7
+    $ mv inlineformset-example-django_1.7 inlineformset-example
+    $ cd inlineformset-example
+    $ virtualenv env
+    $ source env/bin/activate
+    $ pip install -r config/requirements/dev.txt
+    $ ./manage.py migrate
+    $ ./manage.py runserver
 
-$ cd ~/Sites
-
-In the same directory run the following command to setup a virtualenv for your new site. ::
-
-$ mkvirtualenv --no-site-packages --distribute inlineformset-example
-
-Clone the ``inlineformset-example`` example. ::
-
-$ git clone https://github.com/epicserve/inlineformset-example.git
-
-Install the base requirements and development requirements. ::
-
-$ cd inlineformset-example
-$ pip install -r config/requirements/dev.txt
-
-Add the `DJANGO_PROJECT_ROOT` to your Python path. ::
-
-$ add2virtualenv .
-
-Set your ``DJANGO_SETTINGS_MODULE`` environment variable (You'll need to do this everytime you work on this project). ::
-
-$ export DJANGO_SETTINGS_MODULE=config.settings.development
-
-Setup your database::
-
-$ django-admin.py syncdb
-$ django-admin.py migrate
-
-At this point your base site should be setup and you can now run your dev server. ::
-
-$ django-admin.py runserver
