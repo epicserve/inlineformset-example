@@ -1,7 +1,7 @@
+import unittest
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 from books.models import Book, Author
-from django.utils import unittest
 
 c = Client()
 
