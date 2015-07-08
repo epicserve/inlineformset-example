@@ -1,0 +1,22 @@
+# .coveragerc to control coverage
+
+[run]
+branch = True
+
+source = .
+
+;plugins =
+;    django_coverage_plugin
+
+omit =
+    env/*
+    manage.py
+    *migrations*
+    *factories.py
+    *management*
+    config/settings/*
+    config/wsgi.py
+
+
+[html]
+directory = htmlcov
