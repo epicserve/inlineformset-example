@@ -1,4 +1,6 @@
+.coverage
+/.env
 /config/dev.db
 /docs/_build/
-/.env
 /env
+/htmlcov
