@@ -1,5 +1,5 @@
 from django.views.generic import CreateView, ListView, DetailView, UpdateView
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 from .models import Book, Author
 from .forms import AuthorForm, BookFormSet
 

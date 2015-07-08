@@ -8,7 +8,8 @@ urlpatterns = patterns('')
 
 # Debug/Development URLs
 if settings.DEBUG is True:
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     )
 
@@ -16,7 +17,8 @@ if settings.DEBUG is True:
 admin.autodiscover()
 
 # Includes
-urlpatterns += patterns('',
+urlpatterns += patterns(
+    '',
     (r'^admin/', include(admin.site.urls)),
     (r'^grappelli/', include('grappelli.urls')),
     (r'', include('books.urls')),
