@@ -10,7 +10,7 @@ test:
 	@./manage.py test
 
 test_coverage:
-	@coverage run manage.py test && coverage html --fail-under=100 && open htmlcov/index.html
+	@coverage run manage.py test && coverage html && open htmlcov/index.html
 
 lint:
 	@echo "Checking code using flake8 ..."

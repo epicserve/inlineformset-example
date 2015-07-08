@@ -1,4 +1,5 @@
 import os
+import sys
 
 BASE_DIR = os.path.abspath('%s/../../' % os.path.dirname(__file__))
 
@@ -182,3 +183,17 @@ COMPRESS_OUTPUT_DIR = 'cache'
 # django-grappelli settings
 GRAPPELLI_ADMIN_HEADLINE = '%s Administration' % SITE_NAME
 GRAPPELLI_ADMIN_TITLE = '%s Administration' % SITE_NAME
+
+# Test settings
+if 'test' in sys.argv:
+
+    SOUTH_TESTS_MIGRATE = False
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:'
+    }
+
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+        'django.contrib.auth.hashers.SHA1PasswordHasher',
+    )

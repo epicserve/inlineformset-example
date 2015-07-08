@@ -1,0 +1,18 @@
+language: python
+
+python:
+  - "2.7"
+
+install:
+  - pip install -r config/requirements/testing.txt
+
+script:
+  - make lint
+  - coverage run manage.py test
+  - coverage report --fail-under=100
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE="config.settings.testing"
+  matrix:
+    - DJANGO="Django==1.8.2"
