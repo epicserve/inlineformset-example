@@ -1,20 +1,13 @@
 import unittest
+from books.tests.base import BaseTest
 from django.core.urlresolvers import reverse
-from django.test import TestCase, Client
+from django.test import Client
 from books.models import Book, Author
 
 c = Client()
 
 
-class BaseTestCase(TestCase):
-
-    def assertBasicRedirect(self, response, redirect_url):
-        redirect_url = "http://testserver{}".format(redirect_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, redirect_url)
-
-
-class TestCreateView(BaseTestCase):
+class TestCreateView(BaseTest):
 
     def setUp(self):
         self.url = reverse('add_author_and_books')
@@ -41,6 +34,10 @@ class TestCreateView(BaseTestCase):
         self.assertFormsetError(resp, 'formset', 0, 'title', 'This field is required.')
 
     def test_form(self):
+
+        resp = c.get(self.url)
+        self.assertEqual(resp.status_code, 200)
+
         resp = c.post(self.url, {
             'book_set-TOTAL_FORMS': 1,
             'book_set-INITIAL_FORMS': 0,
@@ -57,11 +54,10 @@ class TestCreateView(BaseTestCase):
         self.assertEqual(book.title, 'Book 1')
 
 
-class TestUpdateView(BaseTestCase):
+class TestUpdateView(BaseTest):
 
     def setUp(self):
-        self.author = Author.objects.create(name="Author")
-        self.book = Book.objects.create(author=self.author, title='Book 1')
+        self.add_data()
         self.url = reverse('edit_author_and_books', args=(self.author.pk, ))
 
     @unittest.expectedFailure
@@ -87,6 +83,10 @@ class TestUpdateView(BaseTestCase):
         self.assertFormsetError(resp, 'formset', 0, 'title', 'This field is required.')
 
     def test_form(self):
+
+        resp = c.get(self.url)
+        self.assertEqual(resp.status_code, 200)
+
         resp = c.post(self.url, {
             'book_set-TOTAL_FORMS': 1,
             'book_set-INITIAL_FORMS': 1,
@@ -104,3 +104,39 @@ class TestUpdateView(BaseTestCase):
         self.assertEquals(Book.objects.count(), 1)
         self.assertEqual(author.name, 'Author')
         self.assertEqual(book.title, 'Book 1')
+
+
+class TestBookListView(BaseTest):
+
+    def test_view(self):
+        self.add_data()
+        resp = c.get(reverse('book_list'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(resp.context['object_list']), 1)
+
+
+class TestBookDetailView(BaseTest):
+
+    def test_view(self):
+        self.add_data()
+        resp = c.get(reverse('book_detail', args=(self.book.pk,)))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.context['object'].title, self.book.title)
+
+
+class TestAuthorList(BaseTest):
+
+    def test_view(self):
+        self.add_data()
+        resp = c.get(reverse('author_list'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(resp.context['object_list']), 1)
+
+
+class TestAuthorDetail(BaseTest):
+
+    def test_view(self):
+        self.add_data()
+        resp = c.get(reverse('author_detail', args=(self.author.pk,)))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.context['object'].name, self.author.name)

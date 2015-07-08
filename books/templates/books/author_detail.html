@@ -18,7 +18,7 @@
 
 <ul>
     {% for book in object.book_set.all %}
-    <li>{{ book.title }}</li>
+    <li><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></li>
     {% endfor %}
 </ul>
 

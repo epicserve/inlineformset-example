@@ -7,7 +7,7 @@ help:
 	@echo "test_coverage                  Run tests with coverage"
 
 test:
-	@manage.py test
+	@./manage.py test
 
 test_coverage:
 	@coverage run manage.py test && coverage html && open htmlcov/index.html

@@ -7,7 +7,7 @@ handler500 = 'utils.views.server_error'
 urlpatterns = patterns('')
 
 # Debug/Development URLs
-if settings.DEBUG is True:
+if settings.DEBUG is True:  # pragma: no branch
     urlpatterns += patterns(
         '',
         (r'^admin/doc/', include('django.contrib.admindocs.urls')),

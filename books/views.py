@@ -49,8 +49,6 @@ class FormsetMixin(object):
         self.object = form.save()
         formset.instance = self.object
         formset.save()
-        if hasattr(self, 'get_success_message'):
-            self.get_success_message(form)
         return redirect(self.object.get_absolute_url())
 
     def form_invalid(self, form, formset):
